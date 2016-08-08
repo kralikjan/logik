@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>	
+  <head>		
+    <title>Demo
+    </title>
+    <script src="js/angular.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/button.css">	
+  </head>
+  <body>
+<script>
+    var app = angular.module("app", []);
+    
+    app.service('CheckService', function() {
+      this.isFilledLine = function(colors, activeLine) {
+          for (i = 0; i < 5; i++) {  
+            if(colors[activeLine][i].class.length == 0) { 
+              return true;
+            }
+          }
+          return false;
+        };  
+    });
+    
+    app.controller("ClassController", function ($scope, CheckService) {
+        $scope.selectedColor;
+        $scope.showError = false;
+        $scope.activeLine = 0;
+        $scope.colors = [];
+        for (i = 0; i < 10; i++) {
+          $scope.colors[i] = [];          
+          for (j = 0; j < 5; j++) {
+            $scope.colors[i][j] = {class: '', index: ''};
+          }  
+        }          
+                
+        $scope.selectColor = function (color) {
+			     $scope.selectedColor = color;		
+        };
+        $scope.setColor = function (i,j) {
+			     $scope.colors[i][j] = $scope.selectedColor; 
+        };
+        
+        
+        $scope.evaluate = function() {
+        	//TODO add evaluateLine function
+
+          $scope.showError = CheckService.isFilledLine($scope.colors, $scope.activeLine);      
+          if($scope.showError == false) {
+        	 $scope.activeLine++;
+          }
+          
+        };        
+      
+    });
+  
+</script>
+    <div ng-app="app" ng-controller="ClassController" class="container-fluid" ng-init="initColors = ['btn-red', 'btn-green', 'btn-black', 'btn-yellow', 'btn-orange', 'btn-blue', 'btn-purple', 'btn-olive']">	
+      <div ng-repeat="i in [9,8,7,6,5,4,3,2,1,0]">    	
+        <button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle" ng-class="colors[i][j].class" ng-disabled="i != activeLine" ng-click="setColor(i,j)">
+        </button>    
+      </div>    
+      <div>    	
+        <button ng-repeat="color in initColors" class="btn btn-circle" ng-class="color" ng-click="selectColor({class: color, index: $index})">
+        </button>	 
+      </div>
+      <button class = "btn" ng-click="evaluate()">OK</button>
+      <div ng-show="showError">ERROR</div>
+    </div>
+  </body>
+</html>
