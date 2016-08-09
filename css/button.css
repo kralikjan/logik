@@ -1,13 +1,25 @@
-.btn-circle {
+.btn-circle-big {
   width: 30px;
   height: 30px;
   text-align: center;
   padding: 6px 0;
   margin-top: 2px;
   margin-right: 1px;
-  font-size: 12px;
   line-height: 1.428571429;
   border-radius: 15px;
+}
+
+.btn-circle-small {
+  width: 10px;
+  height: 10px;
+  text-align: center;
+  padding: 3px 0;
+  margin-top: 21px;
+  margin-bottom: 1px;
+  margin-right: 1px;
+  line-height: 1.428571429;
+  border-radius: 5px;
+  cursor: not-allowed;
 }
 
 .btn-red {
@@ -40,4 +52,12 @@
 
 .btn-olive {
 	background-color: olive;
+}
+
+.btn-white {
+	background-color: white;
+}
+
+.btn-gray {
+	background-color: #aaaaaa;
 }
