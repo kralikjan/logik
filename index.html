@@ -10,42 +10,68 @@
 <script>
     var app = angular.module("app", []);
     
-    app.service('CheckService', function() {
-      this.isFilledLine = function(colors, activeLine) {
+    app.service("CheckService", function() {
+     this.isFilledLine = function(colors, activeLine) {
           for (i = 0; i < 5; i++) {  
-            if(colors[activeLine][i].class.length == 0) { 
+            if(colors[activeLine][i].length == 0) { 
               return true;
             }
           }
           return false;
-        };  
+     };   
     });
     
-    app.controller("ClassController", function ($scope, CheckService) {
+    app.service("InitService", function() {
+     this.initColorArray = function() {
+     	var colors = [];
+     	for (i = 0; i < 10; i++) {
+     		colors[i] = [];          
+        	for (j = 0; j < 5; j++) {
+            	colors[i][j] = '';
+          	}  
+        }
+     	return colors;  	
+     };
+     
+     this.initColors = function() {
+     	return ['btn-red', 'btn-green', 'btn-black', 'btn-yellow', 'btn-orange', 'btn-blue', 'btn-purple', 'btn-olive'];	
+     };
+    });
+    
+    app.service("GeneratorService", function() {
+     this.generateCode = function(colors) {
+     	var code = [];
+    		for (i = 0; i < 5; i++) {
+    			code[i] = colors[Math.floor(Math.random() * 8)];
+    		}
+    	return code;	
+     };
+    	
+    });
+    
+    app.controller("MainController", function ($scope, CheckService, InitService, GeneratorService) {
+    	//Initialization
         $scope.selectedColor;
         $scope.showError = false;
         $scope.activeLine = 0;
-        $scope.colors = [];
-        for (i = 0; i < 10; i++) {
-          $scope.colors[i] = [];          
-          for (j = 0; j < 5; j++) {
-            $scope.colors[i][j] = {class: '', index: ''};
-          }  
-        }          
-                
+        $scope.colors = InitService.initColorArray();
+        $scope.initColors = InitService.initColors();
+        $scope.code = GeneratorService.generateCode($scope.initColors);          
+        
+        //Functions        
         $scope.selectColor = function (color) {
 			     $scope.selectedColor = color;		
         };
+        
         $scope.setColor = function (i,j) {
 			     $scope.colors[i][j] = $scope.selectedColor; 
         };
-        
-        
+
         $scope.evaluate = function() {
         	//TODO add evaluateLine function
 
           $scope.showError = CheckService.isFilledLine($scope.colors, $scope.activeLine);      
-          if($scope.showError == false) {
+          if(!$scope.showError) {
         	 $scope.activeLine++;
           }
           
@@ -54,9 +80,9 @@
     });
   
 </script>
-    <div ng-app="app" ng-controller="ClassController" class="container-fluid" ng-init="initColors = ['btn-red', 'btn-green', 'btn-black', 'btn-yellow', 'btn-orange', 'btn-blue', 'btn-purple', 'btn-olive']">	
+    <div ng-app="app" ng-controller="MainController" class="container-fluid">	
       <div ng-repeat="i in [9,8,7,6,5,4,3,2,1,0]">    	
-        <button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-big" ng-class="colors[i][j].class" ng-disabled="i != activeLine" ng-click="setColor(i,j)"></button>    
+        <button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-big" ng-class="colors[i][j].class" ng-disabled="i != activeLine" ng-click="setColor(i,j)"></button>        
       	<button ng-repeat="k in [0,1,2,3,4]" class="btn btn-circle-small" ng-class=""></button>
       </div>    
       <div>    	
@@ -64,7 +90,7 @@
         </button>	 
       </div>
       <button class = "btn" ng-click="evaluate()">Táhnout</button>
-      <div ng-show="showError">ERROR</div>
+      <div ng-show="showError">Nejsou vyplnìna všechna pole v {{activeLine + 1}}. øadì</div>
     </div>
   </body>
 </html>
