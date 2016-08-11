@@ -55,8 +55,8 @@
         $scope.showError = false;
         $scope.activeLine = 0;
         $scope.colors = InitService.initColorArray();
-        $scope.initColors = InitService.initColors();
-        $scope.code = GeneratorService.generateCode($scope.initColors);          
+        $scope.possibleColors = InitService.initColors();
+        $scope.code = GeneratorService.generateCode($scope.possibleColors);          
         
         //Functions        
         $scope.selectColor = function (color) {
@@ -66,10 +66,8 @@
         $scope.setColor = function (i,j) {
 			     $scope.colors[i][j] = $scope.selectedColor; 
         };
-
         $scope.evaluate = function() {
         	//TODO add evaluateLine function
-
           $scope.showError = CheckService.isFilledLine($scope.colors, $scope.activeLine);      
           if(!$scope.showError) {
         	 $scope.activeLine++;
@@ -82,15 +80,16 @@
 </script>
     <div ng-app="app" ng-controller="MainController" class="container-fluid">	
       <div ng-repeat="i in [9,8,7,6,5,4,3,2,1,0]">    	
-        <button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-big" ng-class="colors[i][j].class" ng-disabled="i != activeLine" ng-click="setColor(i,j)"></button>        
+        <button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-big" ng-class="colors[i][j]" ng-disabled="i != activeLine" ng-click="setColor(i,j)"></button>        
       	<button ng-repeat="k in [0,1,2,3,4]" class="btn btn-circle-small" ng-class=""></button>
       </div>    
       <div>    	
-        <button ng-repeat="color in initColors" class="btn btn-circle-big" ng-class="color" ng-click="selectColor({class: color, index: $index})">
+        <button ng-repeat="color in possibleColors" class="btn btn-circle-big" ng-class="color" ng-click="selectColor(color)">
         </button>	 
       </div>
-      <button class = "btn" ng-click="evaluate()">Táhnout</button>
-      <div ng-show="showError">Nejsou vyplnìna všechna pole v {{activeLine + 1}}. øadì</div>
+      <button class = "btn" ng-click="evaluate()">TÃ¡hnout</button>
+      <div ng-show="showError">Nejsou vyplnÄ›na vÅ¡echna pole v {{activeLine + 1}}. Å™adÄ›</div>
+
     </div>
   </body>
 </html>
