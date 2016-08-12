@@ -56,7 +56,8 @@
         $scope.activeLine = 0;
         $scope.colors = InitService.initColorArray();
         $scope.possibleColors = InitService.initColors();
-        $scope.code = GeneratorService.generateCode($scope.possibleColors);          
+        $scope.code = GeneratorService.generateCode($scope.possibleColors);    
+        $scope.hiddenColors = ['btn-gray','btn-gray','btn-gray','btn-gray','btn-gray']      
         
         //Functions        
         $scope.selectColor = function (color) {
@@ -72,16 +73,25 @@
           if(!$scope.showError) {
         	 $scope.activeLine++;
           }
+          if($scope.activeLine > 9) {
+            $scope.showCode($scope.activeLine)
+          }
           
-        };        
+        };   
+        $scope.showCode = function(activeLine) {
+            $scope.hiddenColors = $scope.code;  
+        }     
       
     });
   
 </script>
     <div ng-app="app" ng-controller="MainController" class="container-fluid">	
+      <div>
+        <button ng-repeat="i in [0,1,2,3,4]" class="btn btn-circle-big btn-not-allowed" ng-class="hiddenColors[i]"></button>        
+      </div>
       <div ng-repeat="i in [9,8,7,6,5,4,3,2,1,0]">    	
         <button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-big" ng-class="colors[i][j]" ng-disabled="i != activeLine" ng-click="setColor(i,j)"></button>        
-      	<button ng-repeat="k in [0,1,2,3,4]" class="btn btn-circle-small" ng-class=""></button>
+      	<button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-small btn-not-allowed" ng-class=""></button>
       </div>    
       <div>    	
         <button ng-repeat="color in possibleColors" class="btn btn-circle-big" ng-class="color" ng-click="selectColor(color)">
