@@ -18,7 +18,10 @@
   margin-bottom: 1px;
   margin-right: 1px;
   line-height: 1.428571429;
-  border-radius: 5px;
+  border-radius: 5px; 
+}
+
+.btn-not-allowed {
   cursor: not-allowed;
 }
 
