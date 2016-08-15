@@ -10,7 +10,7 @@
 <script>
     var app = angular.module("app", []);
     
-    app.service("CheckService", function() {
+    app.service("EvaluateService", function() {
      this.isFilledLine = function(colors, activeLine) {
           for (i = 0; i < 5; i++) {  
             if(colors[activeLine][i].length == 0) { 
@@ -18,7 +18,57 @@
             }
           }
           return false;
-     };   
+     };
+     
+     this.evaluate = function(evaluated, computerCombination, playerCombination) {
+     	var evaluatedLine = ['btn-gray','btn-gray','btn-gray','btn-gray','btn-gray'];
+     	var comparedValues1 = [];
+     	var comparedValues2 = [];
+     	
+     	var positionOkCheckedCount = 0;
+     	var positionNotOkCheckedCount = 0;
+     	
+     	for (i = 0; i < 5; i++) {
+            if (playerCombination[i] == computerCombination[i]) {
+                comparedValues1[i] = true;
+                comparedValues2[i] = true;
+                positionOkCheckedCount++;
+            }
+        }
+        
+        for (i = 0; i < 5; i++) {
+            for (j = 0; j < 5; j++) {
+                if (playerCombination[i] == computerCombination[j] && !comparedValues1[i] && !comparedValues2[j]) {
+                    comparedValues1[i] = true;
+                    comparedValues2[j] = true;
+                    positionNotOkCheckedCount++;
+                }
+            }
+        }
+     	
+     	for(i = 0; i < positionOkCheckedCount; i++) {
+     		evaluatedLine[i] = 'btn-black';	
+     	}
+     	
+     	for(i = positionOkCheckedCount; i < (positionOkCheckedCount + positionNotOkCheckedCount); i++) {
+     		evaluatedLine[i] = 'btn-white';	
+     	}
+     	
+     	return evaluatedLine;
+     };
+     
+     this.canShowCode = function(activeLine, evaluated) {
+     	if(activeLine > 9) {
+     		return true;
+     	}
+     	for (i = 0; i < 5; i++) {
+     		if(evaluated[i] != 'btn-black') {
+     			return false;
+     		}
+     	}
+     	return true;     	
+     };
+        
     });
     
     app.service("InitService", function() {
@@ -36,6 +86,18 @@
      this.initColors = function() {
      	return ['btn-red', 'btn-green', 'btn-black', 'btn-yellow', 'btn-orange', 'btn-blue', 'btn-purple', 'btn-olive'];	
      };
+     
+     this.initEvaluated = function() {
+        var evaluated = [];
+     	for (i = 0; i < 10; i++) {
+     		evaluated[i] = [];          
+        	for (j = 0; j < 5; j++) {
+            	evaluated[i][j] = 'btn-gray';
+          	}  
+        }
+     	return evaluated;  		
+     }
+     
     });
     
     app.service("GeneratorService", function() {
@@ -49,15 +111,17 @@
     	
     });
     
-    app.controller("MainController", function ($scope, CheckService, InitService, GeneratorService) {
+    app.controller("MainController", function ($scope, EvaluateService, InitService, GeneratorService) {
     	//Initialization
         $scope.selectedColor;
         $scope.showError = false;
         $scope.activeLine = 0;
         $scope.colors = InitService.initColorArray();
         $scope.possibleColors = InitService.initColors();
-        $scope.code = GeneratorService.generateCode($scope.possibleColors);    
-        $scope.hiddenColors = ['btn-gray','btn-gray','btn-gray','btn-gray','btn-gray']      
+        $scope.computerCombination = GeneratorService.generateCode($scope.possibleColors);    
+        $scope.hiddenColors = ['btn-gray','btn-gray','btn-gray','btn-gray','btn-gray'];
+        $scope.evaluated = InitService.initEvaluated();
+        $scope.disableButton = false;
         
         //Functions        
         $scope.selectColor = function (color) {
@@ -67,39 +131,39 @@
         $scope.setColor = function (i,j) {
 			     $scope.colors[i][j] = $scope.selectedColor; 
         };
+        
         $scope.evaluate = function() {
-        	//TODO add evaluateLine function
-          $scope.showError = CheckService.isFilledLine($scope.colors, $scope.activeLine);      
-          if(!$scope.showError) {
-        	 $scope.activeLine++;
-          }
-          if($scope.activeLine > 9) {
-            $scope.showCode($scope.activeLine)
-          }
-          
-        };   
-        $scope.showCode = function(activeLine) {
-            $scope.hiddenColors = $scope.code;  
-        }     
+        $scope.showError = EvaluateService.isFilledLine($scope.colors, $scope.activeLine);
+        
+        if(!$scope.showError) {
+        	$scope.evaluated[$scope.activeLine] = EvaluateService.evaluate($scope.evaluated, $scope.computerCombination, $scope.colors[$scope.activeLine])
+          	if(EvaluateService.canShowCode($scope.activeLine, $scope.evaluated[$scope.activeLine])) {
+          		$scope.hiddenColors = $scope.computerCombination;
+          		$scope.activeLine = -1;
+          		$scope.disableButton = true; 
+          	} else {
+          		$scope.activeLine++; 
+          	}
+          }	
+        };     
       
     });
   
 </script>
-    <div ng-app="app" ng-controller="MainController" class="container-fluid">	
+    <div ng-app="app" ng-controller="MainController" class="container-fluid"">	
       <div>
         <button ng-repeat="i in [0,1,2,3,4]" class="btn btn-circle-big btn-not-allowed" ng-class="hiddenColors[i]"></button>        
       </div>
-      <div ng-repeat="i in [9,8,7,6,5,4,3,2,1,0]">    	
+      <div ng-repeat="i in [9,8,7,6,5,4,3,2,1,0]">	
         <button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-big" ng-class="colors[i][j]" ng-disabled="i != activeLine" ng-click="setColor(i,j)"></button>        
-      	<button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-small btn-not-allowed" ng-class=""></button>
+      	<button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-small btn-not-allowed" ng-class="evaluated[i][j]"></button>
       </div>    
       <div>    	
         <button ng-repeat="color in possibleColors" class="btn btn-circle-big" ng-class="color" ng-click="selectColor(color)">
         </button>	 
       </div>
-      <button class = "btn" ng-click="evaluate()">TÃ¡hnout</button>
-      <div ng-show="showError">Nejsou vyplnÄ›na vÅ¡echna pole v {{activeLine + 1}}. Å™adÄ›</div>
-
+      <button class = "btn" ng-click="evaluate()" ng-disabled = "disableButton">Táhnout</button>
+      <div ng-show="showError">Nejsou vyplnìna všechna pole v {{activeLine + 1}}. øadì</div>
     </div>
   </body>
 </html>
