@@ -11,21 +11,30 @@
     <script src="js/service/generatorService.js"></script>
     <script src="js/service/initService.js"></script>
   </head>
-  <body style="background-color: gray;">
-    <div ng-app="app" ng-controller="MainController" class="container-fluid"">	
-      <div>
-        <button ng-repeat="i in [0,1,2,3,4]" class="btn btn-circle-big btn-not-allowed" ng-class="hiddenColors[i]"></button>        
+  <body style="background-color: gray; padding-left: 100px; padding-top: 10px;">
+    <div ng-app="app" ng-controller="MainController" class="container-fluid">	
+      <div class="row">
+      	<div class="col-md-1 vcenter">Správná kombinace</div>
+        <button ng-repeat="i in [0,1,2,3,4]" class="btn btn-circle-big btn-not-allowed col-md-1 vcenter" ng-class="hiddenColors[i]"></button>        
       </div>
-      <div ng-repeat="i in [9,8,7,6,5,4,3,2,1,0]">	
-        <button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-big" ng-class="colors[i][j]" ng-disabled="i != activeLine" ng-click="setColor(i,j)"></button>        
-      	<button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-small btn-not-allowed" ng-class="evaluated[i][j]"></button>
+      <div class="row">
+      	<div ng-repeat="i in [9,8,7,6,5,4,3,2,1,0]">	
+      		<div class="col-md-1 vcenter">øada è. {{i+1}}</div>
+        	<button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-big col-md-1 vcenter" ng-class="colors[i][j]" ng-disabled="i != activeLine" ng-click="setColor(i,j)"></button>        
+      		<button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-small btn-not-allowed" ng-class="evaluated[i][j]"></button>
+      	</div>
       </div>    
-      <div>    	
-        <button ng-repeat="color in possibleColors" class="btn btn-circle-big" ng-class="color" ng-click="selectColor(color)">
-        </button>	 
+      <div class="row"> 
+      	<div class="col-md-1 vcenter">Barvy na výbìr</div>   	
+        <button ng-repeat="color in possibleColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-click="selectColor(color)"></button>	 
       </div>
-      <button class = "btn" ng-click="evaluate()" ng-disabled = "disableButton">Táhnout</button>
-      <div ng-show="showError">Nejsou vyplnìna všechna pole v {{activeLine + 1}}. øadì</div>
+      <div class="row"> 
+      	<div class="col-md-1 vcenter"></div>
+      	<button class = "btn vcenter" ng-click="evaluate()" ng-disabled = "disableButton">Táhnout</button>
+      </div>
+      <div class="row"> 
+      	<div class="col-md-12" ng-show="showError">Nejsou vyplnìna všechna pole v øadì è. {{activeLine + 1}}!</div>
+      </div>
     </div>
   </body>
 </html>

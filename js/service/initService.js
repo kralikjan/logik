@@ -1,4 +1,4 @@
-    app.service("InitService", function() {
+    app.service("InitService", function() {	
      this.initColorArray = function() {
      	var colors = [];
      	for (i = 0; i < 10; i++) {
@@ -11,7 +11,7 @@
      };
      
      this.initColors = function() {
-     	return ['btn-red', 'btn-green', 'btn-black', 'btn-yellow', 'btn-orange', 'btn-blue', 'btn-purple', 'btn-olive'];	
+     	return ['btn-red', 'btn-green', 'btn-black', 'btn-yellow', 'btn-orange', 'btn-navy', 'btn-purple', 'btn-olive'];	
      };
      
      this.initEvaluated = function() {
