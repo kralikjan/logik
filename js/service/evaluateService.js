@@ -1,6 +1,6 @@
     app.service("EvaluateService", function() {
      this.isFilledLine = function(colors, activeLine) {
-          for (i = 0; i < 5; i++) {  
+          for (var i = 0; i < 5; i++) {  
             if(colors[activeLine][i].length == 0) { 
               return true;
             }
@@ -16,7 +16,7 @@
      	var positionOkCheckedCount = 0;
      	var positionNotOkCheckedCount = 0;
      	
-     	for (i = 0; i < 5; i++) {
+     	for (var i = 0; i < 5; i++) {
             if (playerCombination[i] == computerCombination[i]) {
                 comparedValues1[i] = true;
                 comparedValues2[i] = true;
@@ -24,8 +24,8 @@
             }
         }
         
-        for (i = 0; i < 5; i++) {
-            for (j = 0; j < 5; j++) {
+        for (var i = 0; i < 5; i++) {
+            for (var j = 0; j < 5; j++) {
                 if (playerCombination[i] == computerCombination[j] && !comparedValues1[i] && !comparedValues2[j]) {
                     comparedValues1[i] = true;
                     comparedValues2[j] = true;
@@ -34,7 +34,7 @@
             }
         }
      	
-     	for(i = 0; i < positionOkCheckedCount; i++) {
+     	for(var i = 0; i < positionOkCheckedCount; i++) {
      		evaluatedLine[i] = 'btn-black';	
      	}
      	
@@ -49,7 +49,7 @@
      	if(activeLine > 9) {
      		return true;
      	}
-     	for (i = 0; i < 5; i++) {
+     	for (var i = 0; i < 5; i++) {
      		if(evaluated[i] != 'btn-black') {
      			return false;
      		}

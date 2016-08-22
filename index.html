@@ -20,13 +20,13 @@
       <div class="row">
       	<div ng-repeat="i in [9,8,7,6,5,4,3,2,1,0]">	
       		<div class="col-md-1 vcenter">øada è. {{i+1}}</div>
-        	<button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-big col-md-1 vcenter" ng-class="colors[i][j]" ng-disabled="i != activeLine" ng-click="setColor(i,j)"></button>        
+        	<button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-big col-md-1 vcenter" ng-class="colors[i][j]" ng-disabled="i != activeLine" ng-click="setColor(i,j)" ng-right-click ="clear(i,j)"></button>        
       		<button ng-repeat="j in [0,1,2,3,4]" class="btn btn-circle-small btn-not-allowed" ng-class="evaluated[i][j]"></button>
       	</div>
       </div>    
       <div class="row"> 
       	<div class="col-md-1 vcenter">Barvy na výbìr</div>   	
-        <button ng-repeat="color in possibleColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-click="selectColor(color)"></button>	 
+        	<button ng-repeat="color in possibleColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-click="selectColor(color)"></button>	    
       </div>
       <div class="row"> 
       	<div class="col-md-1 vcenter"></div>

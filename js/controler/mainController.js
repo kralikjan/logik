@@ -35,5 +35,9 @@ app.controller("MainController", function($scope, EvaluateService, InitService, 
 			}
 		}
 	};
+	
+	$scope.clear = function(i, j) {
+		$scope.colors[i][j] = '';
+	};
 
 });
