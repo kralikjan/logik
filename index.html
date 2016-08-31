@@ -4,14 +4,14 @@
     <title>Logik</title>
     <script src="js/angular.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/button.css">	
+    <link rel="stylesheet" href="css/main.css">	
     <script src="js/logikApp.js"></script>
     <script src="js/controler/mainController.js"></script>
     <script src="js/service/evaluateService.js"></script>
     <script src="js/service/generatorService.js"></script>
     <script src="js/service/initService.js"></script>
   </head>
-  <body style="background-color: gray; padding-left: 100px; padding-top: 10px;">
+  <body>
     <div ng-app="app" ng-controller="MainController" class="container-fluid">	
       <div class="row">
       	<div class="col-md-1 vcenter">Správná kombinace</div>
@@ -26,7 +26,7 @@
       </div>    
       <div class="row"> 
       	<div class="col-md-1 vcenter">Barvy na výbìr</div>   	
-        	<button ng-repeat="color in possibleColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-click="selectColor(color)"></button>	    
+        	<button ng-repeat="color in possibleColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-click="selectColor(color)" ng-disabled = "disableButton"></button>	    
       </div>
       <div class="row"> 
       	<div class="col-md-1 vcenter"></div>

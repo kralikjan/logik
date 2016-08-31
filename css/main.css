@@ -70,3 +70,9 @@
     vertical-align: middle;
     float: none;
 }
+
+body {
+	background-color: #888; 
+	padding-left: 100px; 
+	padding-top: 10px;
+}
