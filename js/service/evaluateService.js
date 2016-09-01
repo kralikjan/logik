@@ -46,7 +46,7 @@
      };
      
      this.canShowCode = function(activeLine, evaluated) {
-     	if(activeLine > 9) {
+     	if(activeLine > 8) {
      		return true;
      	}
      	for (var i = 0; i < 5; i++) {
