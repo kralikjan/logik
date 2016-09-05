@@ -76,3 +76,11 @@ body {
 	padding-left: 100px; 
 	padding-top: 10px;
 }
+
+.text {
+	font-weight: bold;
+}
+
+.red {
+	color: #bb0000;
+}
