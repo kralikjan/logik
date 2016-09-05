@@ -14,7 +14,7 @@
      	return ['btn-red', 'btn-green', 'btn-black', 'btn-yellow', 'btn-orange', 'btn-navy', 'btn-purple', 'btn-olive'];	
      };
      
-     this.initEvaluated = function() {
+     this.initGrayButtons = function() {
         var evaluated = [];
      	for (var i = 0; i < 10; i++) {
      		evaluated[i] = [];          
@@ -23,6 +23,22 @@
           	}  
         }
      	return evaluated;  		
+     };
+     
+     this.initColumns = function() {
+    	 var columns = [];
+    	 for (var i = 0; i < 5; i++) {
+    		 columns[i] = i;
+    	 }
+    	 return columns;
+     };
+     
+     this.initRows = function() {
+    	 var rows = [];
+    	 for (var i = 9; i >= 0; i--) {
+    		 rows[9-i] = i;
+    	 }
+    	 return rows;
      };
      
     });

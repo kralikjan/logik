@@ -1,15 +1,22 @@
 app.controller("MainController", function($scope, EvaluateService, InitService, GeneratorService) {
+	
 	// Initialization
+	$scope.init = function() {
+		$scope.colors = InitService.initColorArray();
+		$scope.possibleColors = InitService.initColors();
+		$scope.computerCombination = GeneratorService.generateCode($scope.possibleColors);
+		$scope.evaluated = InitService.initGrayButtons();
+		$scope.hiddenColors = InitService.initGrayButtons();
+		$scope.activeLine = 0;	
+		$scope.disableButton = false;
+	};
+	
 	$scope.selectedColor;
 	$scope.showError = false;
-	$scope.activeLine = 0;
-	$scope.colors = InitService.initColorArray();
-	$scope.possibleColors = InitService.initColors();
-	$scope.computerCombination = GeneratorService.generateCode($scope.possibleColors);
-	$scope.hiddenColors = [ 'btn-gray', 'btn-gray', 'btn-gray', 'btn-gray', 'btn-gray' ];
-	$scope.evaluated = InitService.initEvaluated();
-	$scope.disableButton = false;
-
+	$scope.columns = InitService.initColumns();
+	$scope.rows = InitService.initRows();
+	$scope.init();
+	
 	// Functions
 	$scope.selectColor = function(color) {
 		$scope.selectedColor = color;
@@ -39,5 +46,7 @@ app.controller("MainController", function($scope, EvaluateService, InitService, 
 	$scope.clear = function(i, j) {
 		$scope.colors[i][j] = '';
 	};
+	
+
 
 });
