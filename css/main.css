@@ -5,20 +5,18 @@
   padding: 6px 0;
   margin-top: 2px;
   margin-right: 1px;
-  line-height: 1.428571429;
   border-radius: 15px;
 }
 
 .btn-circle-small {
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
   text-align: center;
   padding: 3px 0;
-  margin-top: 21px;
+  margin-top: 17px;
   margin-bottom: 1px;
   margin-right: 1px;
-  line-height: 1.428571429;
-  border-radius: 5px; 
+  border-radius: 7px; 
 }
 
 .btn-not-allowed {
