@@ -1,0 +1,45 @@
+/*-------------------------
+	General Styles
+--------------------------*/
+
+
+a:hover{
+	text-decoration:none;
+}
+
+section, footer, header, aside, nav{
+	display: block;
+}
+
+
+/*-------------------------
+	The menu
+--------------------------*/
+
+
+nav{
+	display:inline-block;
+	background-color:white;
+	border-radius:10px;
+}
+
+nav a{
+	display:inline-block;
+	padding: 10px 20px;
+	color:black !important;
+	border-radius:10px;
+}
+
+nav a:first-child{
+	border-radius:10px 0 0 10px;
+}
+
+nav a:last-child{
+	border-radius:0 10px 10px 0;
+}
+
+nav.player .player,
+nav.computer .computer{
+	background-color:black;
+	color:white !important;
+}
