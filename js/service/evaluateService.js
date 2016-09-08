@@ -8,7 +8,7 @@
           return false;
      };
      
-     this.evaluate = function(evaluated, computerCombination, playerCombination) {
+     this.evaluatePlayer = function(evaluated, computerCombination, playerCombination) {
      	var evaluatedLine = ['btn-gray','btn-gray','btn-gray','btn-gray','btn-gray'];
      	var comparedValues1 = [];
      	var comparedValues2 = [];

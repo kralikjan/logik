@@ -1,0 +1,22 @@
+<div ng-controller="ComputerController">
+      <div class="row">
+      	<div ng-repeat="i in rows">	
+      		<div class="col-md-1 vcenter text">&#345;ada &#269;. {{i+1}}</div>
+			<button ng-repeat="j in columns" class="btn btn-circle-big col-md-1 vcenter disabled"></button>   
+      		<button ng-repeat="j in columns" class="btn btn-circle-small" ng-disabled="i != activeLine" ng-class="colors[i][j]" ng-click="setColor(i,j)" ng-right-click ="clear(i,j)"></button>
+      	</div>
+      </div>    
+      <div class="row"> 
+      	<div class="col-md-1 vcenter text">Kontroln&#237; barvy</div>   	
+        <button ng-repeat="color in controlColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-click="selectColor(color)" ng-disabled = "disableButton"></button>	    
+      </div>
+      <div class="row"> 
+      	<div class="col-md-1 vcenter"></div>
+      	<button class = "btn vcenter" ng-click="evaluate()" ng-disabled = "disableButton">T&#225;hnout</button>
+      	<button class = "btn vcenter" ng-click="init()" ng-disabled = "!disableButton">Nov&#225; hra</button>
+      </div>
+      <div class="row"> 
+      <div class="col-md-1 vcenter text">Pole pro kontrolu</div>
+		<input style="width: 235px" class="vcenter" data-toggle="tooltip" data-placement="bottom" title="Pole pro jednodu&#353;&#353;&#237; kontrolu vymy&#353;len&#233;ho k&#243;du"/>  
+      </div>
+</div>

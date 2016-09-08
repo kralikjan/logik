@@ -1,9 +1,10 @@
-app.controller("MainController", function($scope, EvaluateService, InitService, GeneratorService) {
+app.controller("PlayerController", function($scope, EvaluateService, InitService, GeneratorService) {
 	
 	// Initialization
 	$scope.init = function() {
-		$scope.colors = InitService.initColorArray();
-		$scope.possibleColors = InitService.initColors();
+		$scope.colors = InitService.initColorArray('');
+		$scope.possibleColors = InitService.initPossibleColors();
+		$scope.controlColors = InitService.initControlColors();
 		$scope.computerCombination = GeneratorService.generateCode($scope.possibleColors);
 		$scope.evaluated = InitService.initGrayButtons();
 		$scope.hiddenColors = InitService.initGrayButtons();
@@ -26,12 +27,12 @@ app.controller("MainController", function($scope, EvaluateService, InitService, 
 		$scope.colors[i][j] = $scope.selectedColor;
 	};
 
-	$scope.evaluate = function() {
+	$scope.evaluatePlayer = function() {
 		$scope.showError = EvaluateService.isFilledLine($scope.colors,
 				$scope.activeLine);
 
 		if (!$scope.showError) {
-			$scope.evaluated[$scope.activeLine] = EvaluateService.evaluate($scope.evaluated, $scope.computerCombination, $scope.colors[$scope.activeLine]);
+			$scope.evaluated[$scope.activeLine] = EvaluateService.evaluatePlayer($scope.evaluated, $scope.computerCombination, $scope.colors[$scope.activeLine]);
 			if (EvaluateService.canShowCode($scope.activeLine,
 					$scope.evaluated[$scope.activeLine])) {
 				$scope.hiddenColors = $scope.computerCombination;

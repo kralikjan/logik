@@ -8,48 +8,23 @@
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/icon.css">
     <script src="js/logikApp.js"></script>
-    <script src="js/controler/mainController.js"></script>
+    <script src="js/controler/playerController.js"></script>
+    <script src="js/controler/computerController.js"></script>
     <script src="js/service/evaluateService.js"></script>
     <script src="js/service/generatorService.js"></script>
     <script src="js/service/initService.js"></script>
   </head>
   <body>
-   <div ng-app="app" ng-controller="MainController" class="container-fluid">
+   <div ng-app="app" class="container-fluid">
     <nav class="{{active}}">
-    	<a href="#" class="player" ng-click="active='player'; init()"><i class="material-icons md-24">person</i></a>
-    	<a href="#" class="computer" ng-click="active='computer'; init()"><i class="material-icons md-24">laptop</i></a>
+    	<a href="#" class="player" ng-click="active='player';"><i class="material-icons md-24">person</i></a>
+    	<a href="#" class="computer" ng-click="active='computer';"><i class="material-icons md-24">laptop</i></a>
     </nav>
-    <div ng-show="active">
-      <div class="row">
-      	<div class="col-md-1 vcenter text">Správná kombinace</div>
-        <button ng-repeat="i in columns" class="btn btn-circle-big btn-not-allowed col-md-1 vcenter" ng-class="hiddenColors[i]"></button>        
-      </div>
-      <div class="row">
-      	<div ng-repeat="i in rows">	
-      		<div class="col-md-1 vcenter text">øada è. {{i+1}}</div>
-      		<span ng-show="active=='player'">
-        		<ng-include src="'player/combinationButtons.html'"></ng-include>   
-        	</span> 
-        	<span ng-show="active=='computer'">
-        		<ng-include src="'computer/combinationButtons.html'"></ng-include>   
-        	</span>       
-      		<button ng-repeat="j in columns" class="btn btn-circle-small btn-not-allowed" ng-class="evaluated[i][j]"></button>
-      	</div>
-      </div>    
-      <div ng-show="active=='player'">
-      	<div class="row"> 
-      		<div class="col-md-1 vcenter text">Barvy na výbìr</div>   	
-        		<button ng-repeat="color in possibleColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-click="selectColor(color)" ng-disabled = "disableButton"></button>	    
-      	</div>
-      </div>
-      <div class="row"> 
-      	<div class="col-md-1 vcenter"></div>
-      	<button class = "btn vcenter" ng-click="evaluate()" ng-disabled = "disableButton">Táhnout</button>
-      	<button class = "btn vcenter" ng-click="init()" ng-disabled = "!disableButton">Nová hra</button>
-      </div>
-      <div class="row"> 
-      	<div class="col-md-12 text red" ng-show="showError">Nejsou vyplnìna všechna pole v øadì è. {{activeLine + 1}}!</div>
-      </div>
+    <div ng-show="active == 'player'">
+    	<ng-include src="'player.html'"/>
+    </div>
+    <div ng-show="active == 'computer'">
+    	<ng-include src="'computer.html'"/>
     </div>
    </div>
   </body>
