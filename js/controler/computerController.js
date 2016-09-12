@@ -1,4 +1,4 @@
-app.controller("ComputerController", function($scope, EvaluateService, InitService, GeneratorService) {
+app.controller("ComputerController", function($scope, $http, EvaluateService, InitService, GeneratorService) {
 	
 	// Initialization
 	$scope.init = function() {
@@ -8,46 +8,39 @@ app.controller("ComputerController", function($scope, EvaluateService, InitServi
 		$scope.computerCombination = GeneratorService.generateCode($scope.possibleColors);
 		$scope.evaluated = InitService.initGrayButtons();
 		$scope.hiddenColors = InitService.initGrayButtons();
-		$scope.activeLine = 0;	
+		$scope.activeLine = -1;	
 		$scope.disableButton = false;
 	};
 	
-	$scope.selectedColor;
+	$scope.selectedEvaluation;
 	$scope.showError = false;
 	$scope.columns = InitService.initColumns();
 	$scope.rows = InitService.initRows();
 	$scope.init();
+	$scope.test = 'abc';
 	
 	// Functions
-	$scope.selectColor = function(color) {
-		$scope.selectedColor = color;
+	$scope.selectEvaluation = function(evaluation) {
+		$scope.selectedEvaluation = evaluation;
 	};
 
-	$scope.setColor = function(i, j) {
-		$scope.colors[i][j] = $scope.selectedColor;
+	$scope.setEvaluation = function(i, j) {
+		$scope.evaluated[i][j] = $scope.selectedEvaluation;
 	};
 
-	$scope.evaluatePlayer = function() {
-		$scope.showError = EvaluateService.isFilledLine($scope.colors,
-				$scope.activeLine);
-
-		if (!$scope.showError) {
-			$scope.evaluated[$scope.activeLine] = EvaluateService.evaluatePlayer($scope.evaluated, $scope.computerCombination, $scope.colors[$scope.activeLine]);
-			if (EvaluateService.canShowCode($scope.activeLine,
-					$scope.evaluated[$scope.activeLine])) {
-				$scope.hiddenColors = $scope.computerCombination;
-				$scope.activeLine = -1;
-				$scope.disableButton = true;
-			} else {
-				$scope.activeLine++;
-			}
-		}
+	$scope.evaluateComputer= function(activeLine) {
+		$scope.colors[activeLine + 1] = $scope.allCombinations[Math.floor(Math.random() * 32768)];
+		$scope.activeLine++;
 	};
 	
 	$scope.clear = function(i, j) {
 		$scope.colors[i][j] = 'btn-gray';
 	};
 	
-
+	var url = "allCombinations.json";
+	$http.get(url).success( function(response) {
+   		$scope.allCombinations = response;
+	});
+	
 
 });
