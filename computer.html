@@ -12,11 +12,15 @@
       </div>
       <div class="row"> 
       	<div class="col-md-1 vcenter"></div>
-      	<button class = "btn vcenter" ng-click="evaluateComputer(activeLine)" ng-disabled = "disableButton">T&#225;hnout</button>
+      	<button class = "btn vcenter" ng-click="evaluateComputer()" ng-disabled = "disableButton">T&#225;hnout</button>
       	<button class = "btn vcenter" ng-click="init()" ng-disabled = "!disableButton">Nov&#225; hra</button>
       </div>
       <div class="row"> 
-      <div class="col-md-1 vcenter text">Pole pro kontrolu</div>
-		<input style="width: 235px" class="vcenter" data-toggle="tooltip" data-placement="bottom" title="Pole pro jednodu&#353;&#353;&#237; kontrolu vymy&#353;len&#233;ho k&#243;du"/>  
+      	<div class="col-md-1 vcenter text">Barvy na v&#253;b&#283;r</div>   	
+        <button ng-repeat="color in possibleColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-disabled = "true"></button>	    
+      </div>
+      <div class="row"> 
+      	<div class="col-md-1 vcenter text">Pole pro kontrolu</div>
+		<input style="width: 247px" class="vcenter" data-toggle="tooltip" data-placement="bottom" title="Pole pro jednodu&#353;&#353;&#237; kontrolu vymy&#353;len&#233;ho k&#243;du"/>  
       </div>
 </div>

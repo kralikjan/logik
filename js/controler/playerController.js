@@ -32,7 +32,8 @@ app.controller("PlayerController", function($scope, EvaluateService, InitService
 				$scope.activeLine);
 
 		if (!$scope.showError) {
-			$scope.evaluated[$scope.activeLine] = EvaluateService.evaluatePlayer($scope.evaluated, $scope.computerCombination, $scope.colors[$scope.activeLine]);
+			var evaluation = EvaluateService.evaluatePlayer($scope.computerCombination, $scope.colors[$scope.activeLine]);
+			$scope.evaluated[$scope.activeLine] = EvaluateService.getEvaluatedLine(evaluation);
 			if (EvaluateService.canShowCode($scope.activeLine,
 					$scope.evaluated[$scope.activeLine])) {
 				$scope.hiddenColors = $scope.computerCombination;

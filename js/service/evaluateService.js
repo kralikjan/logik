@@ -8,8 +8,7 @@
           return false;
      };
      
-     this.evaluatePlayer = function(evaluated, computerCombination, playerCombination) {
-     	var evaluatedLine = ['btn-gray','btn-gray','btn-gray','btn-gray','btn-gray'];
+     this.evaluatePlayer = function(computerCombination, playerCombination) {
      	var comparedValues1 = [];
      	var comparedValues2 = [];
      	
@@ -34,7 +33,14 @@
             }
         }
      	
-     	for(var i = 0; i < positionOkCheckedCount; i++) {
+     	return {"positionOkCheckedCount": positionOkCheckedCount, "positionNotOkCheckedCount": positionNotOkCheckedCount};
+     };
+     
+     this.getEvaluatedLine = function(evaluation) {
+    	var evaluatedLine = ['btn-gray','btn-gray','btn-gray','btn-gray','btn-gray'];
+    	var positionOkCheckedCount = evaluation.positionOkCheckedCount;
+    	var positionNotOkCheckedCount =  evaluation.positionNotOkCheckedCount;
+      	for(var i = 0; i < positionOkCheckedCount; i++) {
      		evaluatedLine[i] = 'btn-black';	
      	}
      	

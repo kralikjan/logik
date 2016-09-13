@@ -12,12 +12,12 @@ app.controller("ComputerController", function($scope, $http, EvaluateService, In
 		$scope.disableButton = false;
 	};
 	
+	$scope.selectedEvaluation = 'btn-gray';
 	$scope.selectedEvaluation;
 	$scope.showError = false;
 	$scope.columns = InitService.initColumns();
 	$scope.rows = InitService.initRows();
 	$scope.init();
-	$scope.test = 'abc';
 	
 	// Functions
 	$scope.selectEvaluation = function(evaluation) {
@@ -28,13 +28,39 @@ app.controller("ComputerController", function($scope, $http, EvaluateService, In
 		$scope.evaluated[i][j] = $scope.selectedEvaluation;
 	};
 
-	$scope.evaluateComputer= function(activeLine) {
-		$scope.colors[activeLine + 1] = $scope.allCombinations[Math.floor(Math.random() * 32768)];
+	$scope.evaluateComputer= function() {
+		var positionOkCheckedCount = 0;
+		var positionNotOkCheckedCount = 0;
+		if ($scope.activeLine > -1) {
+			for (var i = 0; i < 5; i++) {
+				if($scope.evaluated[$scope.activeLine][i] == 'btn-black') {
+					positionOkCheckedCount++;
+				}
+			}
+			
+			for (var i = 0; i < 5; i++) {
+				if($scope.evaluated[$scope.activeLine][i] == 'btn-white') {
+					positionNotOkCheckedCount++;
+				}
+			}
+		
+			var newAllCombinations = [];
+			var j = 0;
+			for (var i = 0; i < $scope.allCombinations.length; i++) {
+				var evaluated = EvaluateService.evaluatePlayer($scope.colors[$scope.activeLine], $scope.allCombinations[i]);
+				if((evaluated.positionOkCheckedCount == positionOkCheckedCount && evaluated.positionNotOkCheckedCount == positionNotOkCheckedCount) && $scope.colors[$scope.activeLine] != $scope.allCombinations[i]) {
+					newAllCombinations[j] = $scope.allCombinations[i];
+					j++;
+				}
+			}
+			$scope.allCombinations = newAllCombinations;
+		}
+		$scope.colors[$scope.activeLine + 1] = $scope.allCombinations[Math.floor(Math.random() * $scope.allCombinations.length)];
 		$scope.activeLine++;
 	};
 	
 	$scope.clear = function(i, j) {
-		$scope.colors[i][j] = 'btn-gray';
+		$scope.evaluated[i][j] = 'btn-gray';
 	};
 	
 	var url = "allCombinations.json";
