@@ -6,8 +6,8 @@ app.controller("PlayerController", function($scope, EvaluateService, InitService
 		$scope.possibleColors = InitService.initPossibleColors();
 		$scope.controlColors = InitService.initControlColors();
 		$scope.computerCombination = GeneratorService.generateCode($scope.possibleColors);
-		$scope.evaluated = InitService.initGrayButtons();
-		$scope.hiddenColors = InitService.initGrayButtons();
+		$scope.evaluated = InitService.initColorArray('btn-gray');
+		$scope.hiddenColors = ['btn-gray', 'btn-gray', 'btn-gray', 'btn-gray', 'btn-gray'];
 		$scope.activeLine = 0;	
 		$scope.disableButton = false;
 	};

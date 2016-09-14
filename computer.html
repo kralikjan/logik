@@ -3,24 +3,28 @@
       	<div ng-repeat="i in rows">	
       		<div class="col-md-1 vcenter text">&#345;ada &#269;. {{i+1}}</div>
 			<button ng-repeat="j in columns" class="btn btn-circle-big col-md-1 vcenter disabled" ng-class="colors[i][j]"></button>   
-      		<button ng-repeat="j in columns" class="btn btn-circle-small" ng-disabled="i != activeLine" ng-class="evaluated[i][j]" ng-click="setEvaluation(i,j)" ng-right-click ="clear(i,j)"></button>
+      		<button ng-repeat="j in columns" class="btn btn-circle-small" ng-disabled="(i != activeLine)" ng-class="evaluated[i][j]" ng-click="setEvaluation(i,j)" ng-right-click ="clear(i,j)"></button>
       	</div>
-      </div>    
+      </div> 
+      <div class="row"> 
+      	<div class="col-md-1 vcenter text">Kontroln&#237; &#345;ada</div>
+		<button ng-repeat="i in columns" class="btn btn-circle-big col-md-1 vcenter" ng-class="controlColors[i]" ng-click="setColor(i)"></button> 
+      </div> 
+      <div class="row"> 
+      	<div class="col-md-1 vcenter text">Barvy na v&#253;b&#283;r</div>   	
+        <button ng-repeat="color in possibleColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-click="selectColor(color)"></button>	    
+      </div>  
       <div class="row"> 
       	<div class="col-md-1 vcenter text">Kontroln&#237; barvy</div>   	
-        <button ng-repeat="color in controlColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-click="selectEvaluation(color)" ng-disabled = "disableButton"></button>	    
+        <button ng-repeat="color in evaluationColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-click="selectEvaluation(color)" ng-disabled = "disableButton"></button>	    
       </div>
       <div class="row"> 
       	<div class="col-md-1 vcenter"></div>
       	<button class = "btn vcenter" ng-click="evaluateComputer()" ng-disabled = "disableButton">T&#225;hnout</button>
       	<button class = "btn vcenter" ng-click="init()" ng-disabled = "!disableButton">Nov&#225; hra</button>
       </div>
-      <div class="row"> 
-      	<div class="col-md-1 vcenter text">Barvy na v&#253;b&#283;r</div>   	
-        <button ng-repeat="color in possibleColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-disabled = "true"></button>	    
-      </div>
-      <div class="row"> 
-      	<div class="col-md-1 vcenter text">Pole pro kontrolu</div>
-		<input style="width: 247px" class="vcenter" data-toggle="tooltip" data-placement="bottom" title="Pole pro jednodu&#353;&#353;&#237; kontrolu vymy&#353;len&#233;ho k&#243;du"/>  
-      </div>
+	  <div class="row"> 
+      	<div class="col-md-12 text red" ng-show="showError">Podv&#225;d&#237;te, neexistuje dal&#353;&#237; mo&#382;n&#225; kombinace!</div>
+      </div>	
+      <span style="color: #888;">{{allCombinations.length}}</span>
 </div>

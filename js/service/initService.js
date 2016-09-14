@@ -18,17 +18,6 @@
       	return ['btn-black', 'btn-white'];	
       };
      
-     this.initGrayButtons = function() {
-        var evaluated = [];
-     	for (var i = 0; i < 10; i++) {
-     		evaluated[i] = [];          
-        	for (var j = 0; j < 5; j++) {
-            	evaluated[i][j] = 'btn-gray';
-          	}  
-        }
-     	return evaluated;  		
-     };
-     
      this.initColumns = function() {
     	 var columns = [];
     	 for (var i = 0; i < 5; i++) {
