@@ -1,14 +1,14 @@
 <div ng-controller="ComputerController">
+      <div class="row"> 
+      	<div class="col-md-1 vcenter text">Kontroln&#237; &#345;ada</div>
+		<button ng-repeat="i in columns" class="btn btn-circle-big col-md-1 vcenter" ng-class="controlColors[i]" ng-click="setColor(i)"></button> 
+      </div> 
       <div class="row">
       	<div ng-repeat="i in rows">	
       		<div class="col-md-1 vcenter text">&#345;ada &#269;. {{i+1}}</div>
 			<button ng-repeat="j in columns" class="btn btn-circle-big col-md-1 vcenter disabled" ng-class="colors[i][j]"></button>   
       		<button ng-repeat="j in columns" class="btn btn-circle-small" ng-disabled="(i != activeLine)" ng-class="evaluated[i][j]" ng-click="setEvaluation(i,j)" ng-right-click ="clear(i,j)"></button>
       	</div>
-      </div> 
-      <div class="row"> 
-      	<div class="col-md-1 vcenter text">Kontroln&#237; &#345;ada</div>
-		<button ng-repeat="i in columns" class="btn btn-circle-big col-md-1 vcenter" ng-class="controlColors[i]" ng-click="setColor(i)"></button> 
       </div> 
       <div class="row"> 
       	<div class="col-md-1 vcenter text">Barvy na v&#253;b&#283;r</div>   	
