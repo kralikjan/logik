@@ -25,6 +25,7 @@ app.controller("ComputerController", function($scope, $http, EvaluateService, In
 		$scope.selectedColor;
 		$scope.columns = InitService.initColumns();
 		$scope.rows = InitService.initRows();
+		$scope.generateUniqueCombination = true;
 	};
 	
 
@@ -51,32 +52,13 @@ app.controller("ComputerController", function($scope, $http, EvaluateService, In
 		var positionOkCheckedCount = 0;
 		var positionNotOkCheckedCount = 0;
 		if ($scope.activeLine > -1) {
-			for (var i = 0; i < 5; i++) {
-				if($scope.evaluated[$scope.activeLine][i] == 'btn-black') {
-					positionOkCheckedCount++;
-				}
-			}
-			
-			for (var i = 0; i < 5; i++) {
-				if($scope.evaluated[$scope.activeLine][i] == 'btn-white') {
-					positionNotOkCheckedCount++;
-				}
-			}
-		
-			var newAllCombinations = [];
-			var j = 0;
-			for (var i = 0; i < $scope.allCombinations.length; i++) {
-				var evaluated = EvaluateService.evaluatePlayer($scope.colors[$scope.activeLine], $scope.allCombinations[i]);
-				if((evaluated.positionOkCheckedCount == positionOkCheckedCount && evaluated.positionNotOkCheckedCount == positionNotOkCheckedCount) && $scope.colors[$scope.activeLine] != $scope.allCombinations[i]) {
-					newAllCombinations[j] = $scope.allCombinations[i];
-					j++;
-				}
-			}
-			$scope.allCombinations = newAllCombinations;
+			positionOkCheckedCount = EvaluateService.countPosition($scope.evaluated[$scope.activeLine], 'btn-black');
+			positionNotOkCheckedCount = EvaluateService.countPosition($scope.evaluated[$scope.activeLine], 'btn-white');
+			$scope.allCombinations = EvaluateService.computeNewCombinations($scope.allCombinations, $scope.colors[$scope.activeLine], positionOkCheckedCount, positionNotOkCheckedCount);
 		}
 		
 		if ($scope.allCombinations.length != 0) {
-			$scope.colors[$scope.activeLine + 1] = $scope.allCombinations[Math.floor(Math.random() * $scope.allCombinations.length)];
+			$scope.colors[$scope.activeLine + 1] = GeneratorService.getRandomCombination($scope.generateUniqueCombination, $scope.allCombinations);
 		} else if(positionOkCheckedCount != 5) {
 			$scope.showError = true;	
 		}
@@ -87,6 +69,9 @@ app.controller("ComputerController", function($scope, $http, EvaluateService, In
 			$scope.disableButton = true;
 		} else {
 			$scope.activeLine++;
+			if ($scope.activeLine == 2) {
+				$scope.generateUniqueCombination = false;
+			}
 		}
 	};
 	

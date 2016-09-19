@@ -8,7 +8,7 @@
           return false;
      };
      
-     this.evaluatePlayer = function(computerCombination, playerCombination) {
+     this.evaluate = function(computerCombination, playerCombination) {
      	var comparedValues1 = [];
      	var comparedValues2 = [];
      	
@@ -61,6 +61,29 @@
      		}
      	}
      	return true;     	
+     };
+     
+     this.countPosition = function(evalutation, positionColor) {
+    	var count = 0;
+			for (var i = 0; i < 5; i++) {
+				if(evalutation[i] == positionColor) {
+					count++;
+				}
+			}
+		return count;
+     };
+     
+     this.computeNewCombinations = function(allCombinations, checkedCombination, positionOkCheckedCount, positionNotOkCheckedCount) {
+			var newAllCombinations = [];
+			var j = 0;
+			for (var i = 0; i < allCombinations.length; i++) {
+				var evaluated = this.evaluate(checkedCombination, allCombinations[i]);
+				if((evaluated.positionOkCheckedCount == positionOkCheckedCount && evaluated.positionNotOkCheckedCount == positionNotOkCheckedCount) && checkedCombination != allCombinations[i]) {
+					newAllCombinations[j] = allCombinations[i];
+					j++;
+				}
+			}
+			return newAllCombinations;
      };
         
     });

@@ -32,7 +32,7 @@ app.controller("PlayerController", function($scope, EvaluateService, InitService
 				$scope.activeLine);
 
 		if (!$scope.showError) {
-			var evaluation = EvaluateService.evaluatePlayer($scope.computerCombination, $scope.colors[$scope.activeLine]);
+			var evaluation = EvaluateService.evaluate($scope.computerCombination, $scope.colors[$scope.activeLine]);
 			$scope.evaluated[$scope.activeLine] = EvaluateService.getEvaluatedLine(evaluation);
 			if (EvaluateService.canShowCode($scope.activeLine,
 					$scope.evaluated[$scope.activeLine])) {
