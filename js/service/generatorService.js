@@ -38,13 +38,28 @@
     	 return '';
      };
      
-     this.getRandomCombination = function(generateUniqueCombination, allCombinations) {
+     this.generateNonUniqueCombination = function(combinations) {
+    	 this.shuffle(combinations);
+    	 for (var i = 0; i < combinations.length; i++) {
+    		 if (!this.isUnique(combinations[i])) {
+    			 return combinations[i];
+    		 }
+    	 }
+    	 return '';
+     };
+     
+     this.getRandomCombination = function(generateUniqueCombination, generateNonUniqueCombination, allCombinations) {
 			if (generateUniqueCombination) {
-				var uniqueCombination = this.generateUniqueCombination(allCombinations);
-				if (uniqueCombination != '') {
-					return uniqueCombination;	
+				var combination = this.generateUniqueCombination(allCombinations);
+				if (combination != '') {
+					return combination;	
 				} 
-			} 
+			} else if (generateNonUniqueCombination) {
+				var combination = this.generateNonUniqueCombination(allCombinations);
+				if (combination != '') {
+					return combination;	
+				} 
+			}
 			return allCombinations[Math.floor(Math.random() * allCombinations.length)];
      };
     	

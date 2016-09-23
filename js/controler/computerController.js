@@ -26,6 +26,7 @@ app.controller("ComputerController", function($scope, $http, EvaluateService, In
 		$scope.columns = InitService.initColumns();
 		$scope.rows = InitService.initRows();
 		$scope.generateUniqueCombination = true;
+		$scope.generateNonUniqueCombination = false;
 	};
 	
 
@@ -58,7 +59,7 @@ app.controller("ComputerController", function($scope, $http, EvaluateService, In
 		}
 		
 		if ($scope.allCombinations.length != 0) {
-			$scope.colors[$scope.activeLine + 1] = GeneratorService.getRandomCombination($scope.generateUniqueCombination, $scope.allCombinations);
+			$scope.colors[$scope.activeLine + 1] = GeneratorService.getRandomCombination($scope.generateUniqueCombination, $scope.generateNonUniqueCombination, $scope.allCombinations);
 		} else if(positionOkCheckedCount != 5) {
 			$scope.showError = true;	
 		}
@@ -68,10 +69,14 @@ app.controller("ComputerController", function($scope, $http, EvaluateService, In
 			$scope.activeLine = -1;
 			$scope.disableButton = true;
 		} else {
-			$scope.activeLine++;
-			if ($scope.activeLine == 2) {
+			if ($scope.activeLine == 0) {
+				$scope.generateNonUniqueCombination = true;
 				$scope.generateUniqueCombination = false;
+			} 
+			if ($scope.activeLine == 1) {
+				$scope.generateNonUniqueCombination = false;
 			}
+			$scope.activeLine++;
 		}
 	};
 	
