@@ -1,0 +1,31 @@
+<div ng-controller="ListController">
+      <div class="row">
+      	<div ng-repeat="i in rows">	
+      		<div class="col-md-1 vcenter text">&#345;ada &#269;. {{i+1}}</div>
+			<button ng-repeat="j in columns" class="btn btn-circle-big col-md-1 vcenter" ng-class="colors[i][j]" ng-click="setColor(i,j)" ng-right-click ="clearColor(i,j)"></button>   
+      		<button ng-repeat="j in columns" class="btn btn-circle-small" ng-class="evaluated[i][j]" ng-click="setEvaluation(i,j)" ng-right-click ="clearEvaluation(i,j)"></button>
+      	</div>
+      </div> 
+      <div class="row"> 
+      	<div class="col-md-1 vcenter text">Barvy na v&#253;b&#283;r</div>   	
+        <button ng-repeat="color in possibleColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-click="selectColor(color)"></button>	    
+      </div>  
+      <div class="row"> 
+      	<div class="col-md-1 vcenter text">Kontroln&#237; barvy</div>   	
+        <button ng-repeat="color in evaluationColors" class="btn btn-circle-big col-md-1 vcenter" ng-class="color" ng-click="selectEvaluation(color)"></button>	    
+      </div>
+      <div class="row"> 
+      	<div class="col-md-1 vcenter"></div>
+      	<button class = "btn vcenter" ng-click="evaluate()" ng-disabled = "disableButton">Vyhodnotit</button>
+      </div>
+	  <div class="row"> 
+      	<div class="col-md-1 vcenter text">Zb&#253;vaj&#237;c&#237; kombinace:</div>
+      	<div class="col-md-1 vcenter text">{{temporaryCombinations.length}}</div>
+      </div>	
+      <div class="row" ng-show="temporaryCombinations.length<100">
+      	<div ng-repeat="i in range(0,temporaryCombinations.length-1,100)">
+      		<div class="col-sm-1"></div>
+      		<button ng-repeat="j in columns" class="btn btn-circle-big col-md-1 vcenter btn-disabled" ng-class="temporaryCombinations[i][j]"></button>
+      	</div>	
+      </div>
+</div>

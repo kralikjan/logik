@@ -10,6 +10,7 @@
     <script src="js/logikApp.js"></script>
     <script src="js/controler/playerController.js"></script>
     <script src="js/controler/computerController.js"></script>
+    <script src="js/controler/listController.js"></script>
     <script src="js/service/evaluateService.js"></script>
     <script src="js/service/generatorService.js"></script>
     <script src="js/service/initService.js"></script>
@@ -19,12 +20,17 @@
     <nav class="{{active}}">
     	<a href="#" class="player" ng-click="active='player';"><i class="material-icons md-24">person</i></a>
     	<a href="#" class="computer" ng-click="active='computer';"><i class="material-icons md-24">laptop</i></a>
+    	<a href="#" class="list" ng-click="active='list';"><i class="material-icons md-24">list</i></a>
+    	
     </nav>
     <div ng-show="active == 'player'">
     	<ng-include src="'player.html'"/>
     </div>
     <div ng-show="active == 'computer'">
     	<ng-include src="'computer.html'"/>
+    </div>
+    <div ng-show="active == 'list'">
+    	<ng-include src="'list.html'"/>
     </div>
    </div>
   </body>

@@ -28,7 +28,7 @@ app.controller("PlayerController", function($scope, EvaluateService, InitService
 	};
 
 	$scope.evaluatePlayer = function() {
-		$scope.showError = EvaluateService.isFilledLine($scope.colors,
+		$scope.showError = EvaluateService.isNotFilledLine($scope.colors,
 				$scope.activeLine);
 
 		if (!$scope.showError) {

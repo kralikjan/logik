@@ -1,5 +1,5 @@
     app.service("EvaluateService", function() {
-     this.isFilledLine = function(colors, activeLine) {
+     this.isNotFilledLine = function(colors, activeLine) {
           for (var i = 0; i < 5; i++) {  
             if(colors[activeLine][i].length == 0) { 
               return true;
