@@ -48,7 +48,18 @@
     	 return '';
      };
      
-     this.getRandomCombination = function(generateUniqueCombination, generateNonUniqueCombination, allCombinations) {
+     this.generateCombinationWithColor = function(combinations, color) {
+    	 this.shuffle(combinations);
+    	 for (var i = 0; i < combinations.length; i++) {
+    		 if (combinations[i].indexOf(color) > 0) {
+    			 return combinations[i];
+    		 }
+    	 }
+    	 return '';
+     };
+     
+     this.getRandomCombination = function(generateUniqueCombination, generateNonUniqueCombination, allCombinations, usedColors) {
+    	 	var allColors = ['btn-red', 'btn-green', 'btn-black', 'btn-yellow', 'btn-orange', 'btn-navy', 'btn-purple', 'btn-olive'];
 			if (generateUniqueCombination) {
 				var combination = this.generateUniqueCombination(allCombinations);
 				if (combination != '') {
@@ -59,6 +70,21 @@
 				if (combination != '') {
 					return combination;	
 				} 
+			} else {
+				var notUsedColor = '';
+				for (var i = 0; i < allColors.length; i++) {
+					if (usedColors.indexOf(allColors[i]) < 0) {
+						notUsedColor = allColors[i];
+						break;
+					}
+				}
+				
+				if(notUsedColor.length > 0) {
+					var combination = this.generateCombinationWithColor(allCombinations, notUsedColor);
+					if (combination != '') {
+						return combination;	
+					} 	
+				}
 			}
 			return allCombinations[Math.floor(Math.random() * allCombinations.length)];
      };

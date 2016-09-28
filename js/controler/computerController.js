@@ -27,6 +27,7 @@ app.controller("ComputerController", function($scope, $http, EvaluateService, In
 		$scope.rows = InitService.initRows();
 		$scope.generateUniqueCombination = true;
 		$scope.generateNonUniqueCombination = false;
+		$scope.usedColors = [];
 	};
 	
 
@@ -56,10 +57,15 @@ app.controller("ComputerController", function($scope, $http, EvaluateService, In
 			positionOkCheckedCount = EvaluateService.countPosition($scope.evaluated[$scope.activeLine], 'btn-black');
 			positionNotOkCheckedCount = EvaluateService.countPosition($scope.evaluated[$scope.activeLine], 'btn-white');
 			$scope.allCombinations = EvaluateService.computeNewCombinations($scope.allCombinations, $scope.colors[$scope.activeLine], positionOkCheckedCount, positionNotOkCheckedCount);
+			for (var i = 0; i < 5; i++) {
+				if ($scope.usedColors.indexOf($scope.colors[$scope.activeLine][i]) < 0) {
+					$scope.usedColors.push($scope.colors[$scope.activeLine][i]);
+				}
+			}
 		}
 		
 		if ($scope.allCombinations.length != 0) {
-			$scope.colors[$scope.activeLine + 1] = GeneratorService.getRandomCombination($scope.generateUniqueCombination, $scope.generateNonUniqueCombination, $scope.allCombinations);
+			$scope.colors[$scope.activeLine + 1] = GeneratorService.getRandomCombination($scope.generateUniqueCombination, $scope.generateNonUniqueCombination, $scope.allCombinations, $scope.usedColors);
 		} else if(positionOkCheckedCount != 5) {
 			$scope.showError = true;	
 		}
@@ -70,12 +76,8 @@ app.controller("ComputerController", function($scope, $http, EvaluateService, In
 			$scope.disableButton = true;
 		} else {
 			if ($scope.activeLine == 0) {
-				$scope.generateNonUniqueCombination = true;
 				$scope.generateUniqueCombination = false;
 			} 
-			if ($scope.activeLine == 1) {
-				$scope.generateNonUniqueCombination = false;
-			}
 			$scope.activeLine++;
 		}
 	};
